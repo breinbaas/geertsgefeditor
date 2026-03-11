@@ -3,7 +3,7 @@ from math import inf
 
 
 def analyze_gef(lines):
-    result = {"startdate": None, "columninfos": [], "data_lines": []}
+    result = {"startdate": None, "columninfos": [], "data_lines": [], "name": ""}
     for i, line in enumerate(lines):
         if line.find("#STARTDATE") == 0:
             result["startdate"] = line.split("=")[1].strip()
@@ -11,6 +11,8 @@ def analyze_gef(lines):
             result["columninfos"].append(
                 {"index": len(result["columninfos"]), "min": inf, "max": -inf}
             )
+        elif line.find("#TESTID") == 0:
+            result["name"] = line.split("=")[1].strip()
         elif line.find("#EOH") == 0:
             start_data_lines = i + 1
 
@@ -210,7 +212,7 @@ if uploaded_file is not None:
             elif line.find("#LASTSCAN") == 0 and not column_min_max_added:
                 for i, ci in enumerate(data["columninfos"]):
                     new_file_lines.append(
-                        f"#COLUMNMINMAX {i+1}, {ci['min']}, {ci['max']}"
+                        f"#COLUMNMINMAX= {i+1}, {ci['min']}, {ci['max']}"
                     )
                 column_min_max_added = True
                 new_file_lines.append("#COLUMNSEPARATOR= ;")
@@ -267,9 +269,7 @@ if uploaded_file is not None:
 
         st.success("Het bestand is succesvol gegenereerd en klaar om te downloaden!")
 
-        out_name = uploaded_file.name.replace(".gef", "_AANGEPAST.gef").replace(
-            ".GEF", "_AANGEPAST.GEF"
-        )
+        out_name = f"{data['name']}.gef"
 
         st.download_button(
             label="Download Aangepaste GEF File",
