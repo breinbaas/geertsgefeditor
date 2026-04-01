@@ -88,6 +88,15 @@ if uploaded_file is not None:
             index=3,
         )
 
+        if mvar_012 == "mechanischDiscontinu":
+            mvar_012_idx = 1
+        elif mvar_012 == "mechanischContinu":
+            mvar_012_idx = 2
+        elif mvar_012 == "elektrischDiscontinu":
+            mvar_012_idx = 3
+        else:
+            mvar_012_idx = 4
+
         mvar_017 = st.selectbox(
             "Stopcriterium",
             options=[
@@ -181,7 +190,7 @@ if uploaded_file is not None:
 
         # Format the parameters based on form input
         mtext_006_fmt = f"6, 22476-1 / {mtext_006}, Test class"
-        mvar_012_fmt = f"12, 0.000000, -, {mvar_012}"
+        mvar_012_fmt = f"12, {mvar_012_idx}, -, {mvar_012}"
         mvar_017_fmt = f"17, {mvar_017_idx}, -, Stop criteria"
         mtext_020_fmt = f"20, {mtext_020}, signaalbewerking uitgevoerd"
         mtext_021_fmt = f"21, {mtext_021}, bewerking onderbrekingen uitgevoerd"
