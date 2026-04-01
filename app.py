@@ -88,14 +88,13 @@ if uploaded_file is not None:
             index=3,
         )
 
+        mvar_012_idx = 4
         if mvar_012 == "mechanischDiscontinu":
             mvar_012_idx = 1
         elif mvar_012 == "mechanischContinu":
             mvar_012_idx = 2
         elif mvar_012 == "elektrischDiscontinu":
             mvar_012_idx = 3
-        else:
-            mvar_012_idx = 4
 
         mvar_017 = st.selectbox(
             "Stopcriterium",
